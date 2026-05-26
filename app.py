@@ -1,55 +1,55 @@
-from flask import Flask, render_template_string, request, jsonify
+from flask import Flask, render_template_string, redirect
 import requests
 
 app = Flask(__name__)
 
-# === CẤU HÌNH API (ĐÃ ĐÚNG THEO TOKEN BẠN CUNG CẤP) ===
+# === TOKEN CỦA BẠN ===
 LINK4M_TOKEN = "65c47d157fbdff4d79625e57"
 TRAFFIC_TOKEN = "ee4f080ff90f6180b109ecc4"
 
-# Link MediaFire
+# Link MediaFire gốc
 MEDIAFIRE_LINKS = {
     "esp_vip": "https://www.mediafire.com/file/hbrs6rr26flgz7z/FF+MAX+INJECTOR+MAIN+ID+SAFE+(1).zip/file",
     "aimbot": "https://www.mediafire.com/file/oged4p8u6blci0k/LEHER+HS+METADATA.7z/file"
 }
 
-# === QUY TRÌNH ĐÚNG: MediaFire → Link4m → TrafficVN ===
+# === HÀM TẠO LINK ===
 def create_link4m_url(mediafire_url):
-    """Tạo link Link4m từ MediaFire (bước 1)"""
+    """Tạo link Link4m từ MediaFire"""
     try:
-        # Theo ảnh của bạn, Link4m dùng GET request
         api_url = f"https://link4m.com/api?api={LINK4M_TOKEN}&url={mediafire_url}"
-        response = requests.get(api_url, timeout=10)
-        if response.status_code == 200:
-            data = response.json()
-            # Link4m trả về shorturl hoặc shortened_url
+        r = requests.get(api_url, timeout=10)
+        if r.status_code == 200:
+            data = r.json()
             return data.get("shorturl") or data.get("shortened_url") or data.get("url")
         return mediafire_url
-    except Exception as e:
-        print(f"Lỗi Link4m: {e}")
+    except:
         return mediafire_url
 
 def create_trafficvn_url(link4m_url):
-    """Tạo link TrafficVN từ Link4m (bước 2 - link cuối cùng user click)"""
+    """Tạo link TrafficVN từ Link4m"""
     try:
         api_url = "https://trafficvn.com/api/v1/shorten"
         payload = {"token": TRAFFIC_TOKEN, "url": link4m_url}
-        response = requests.post(api_url, json=payload, timeout=10)
-        if response.status_code == 200:
-            data = response.json()
+        r = requests.post(api_url, json=payload, timeout=10)
+        if r.status_code == 200:
+            data = r.json()
             return data.get("shortened_url") or data.get("shorturl")
         return link4m_url
-    except Exception as e:
-        print(f"Lỗi TrafficVN: {e}")
+    except:
         return link4m_url
 
-def create_download_link(mediafire_url):
-    """Quy trình hoàn chỉnh: MediaFire → Link4m → TrafficVN"""
-    step1 = create_link4m_url(mediafire_url)      # Bước 1: Tạo link Link4m
-    step2 = create_trafficvn_url(step1)           # Bước 2: Tạo link TrafficVN từ Link4m
-    return step2  # Đây là link user click (TrafficVN)
+# === TỰ ĐỘNG TẠO LINK KHI KHỞI ĐỘNG ===
+print("🔄 Đang tạo link TrafficVN + Link4m...")
+TRAFFIC_LINKS = {}
+for key, media_url in MEDIAFIRE_LINKS.items():
+    link4m = create_link4m_url(media_url)
+    traffic = create_trafficvn_url(link4m)
+    TRAFFIC_LINKS[key] = traffic
+    print(f"✅ {key}: {traffic}")
+print("🎉 Khởi động web...\n")
 
-# === HTML + CSS + JAVASCRIPT ===
+# === HTML ===
 HTML_TEMPLATE = '''
 <!DOCTYPE html>
 <html lang="vi">
@@ -167,12 +167,6 @@ HTML_TEMPLATE = '''
             transform: scale(1.02);
             box-shadow: 0 5px 20px rgba(0,255,136,0.4);
         }
-        .loading {
-            text-align: center;
-            color: #00ff88;
-            margin-top: 10px;
-            display: none;
-        }
         @media (max-width: 768px) {
             .games-grid { grid-template-columns: 1fr; }
             h1 { font-size: 1.8rem; }
@@ -195,13 +189,11 @@ HTML_TEMPLATE = '''
                             📌 Tài khoản: LIMON-GAMING-OFC<br>
                             🔑 Mật khẩu: 248194848323
                         </div>
-                        <button class="btn-download" onclick="downloadFile('esp_vip')">⬇️ Tải xuống</button>
-                        <div id="loading-esp" class="loading">⏳ Đang tạo link...</div>
+                        <button class="btn-download" onclick="window.location.href='/download/esp_vip'">⬇️ Tải xuống</button>
                     </div>
                     <div class="feature-box aim">
                         <div class="feature-name aim">🎯 AimBot 90%</div>
-                        <button class="btn-download" onclick="downloadFile('aimbot')">⬇️ Tải xuống</button>
-                        <div id="loading-aim" class="loading">⏳ Đang tạo link...</div>
+                        <button class="btn-download" onclick="window.location.href='/download/aimbot'">⬇️ Tải xuống</button>
                     </div>
                 </div>
                 <div class="platform-section">
@@ -223,30 +215,6 @@ HTML_TEMPLATE = '''
             </div>
         </div>
     </div>
-    <script>
-        async function downloadFile(type) {
-            const loadingId = type === 'esp_vip' ? 'loading-esp' : 'loading-aim';
-            const loader = document.getElementById(loadingId);
-            loader.style.display = 'block';
-            try {
-                const response = await fetch('/get_download_link', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ file_type: type })
-                });
-                const data = await response.json();
-                if (data.success && data.download_url) {
-                    window.location.href = data.download_url;
-                } else {
-                    alert('Lỗi: ' + (data.error || 'Không thể tạo link tải'));
-                }
-            } catch (error) {
-                alert('Lỗi kết nối: ' + error.message);
-            } finally {
-                loader.style.display = 'none';
-            }
-        }
-    </script>
 </body>
 </html>
 '''
@@ -255,18 +223,11 @@ HTML_TEMPLATE = '''
 def index():
     return render_template_string(HTML_TEMPLATE)
 
-@app.route('/get_download_link', methods=['POST'])
-def get_download_link():
-    try:
-        data = request.get_json()
-        file_type = data.get('file_type')
-        if file_type not in MEDIAFIRE_LINKS:
-            return jsonify({'success': False, 'error': 'Loại file không hợp lệ'})
-        mediafire_url = MEDIAFIRE_LINKS[file_type]
-        download_url = create_download_link(mediafire_url)
-        return jsonify({'success': True, 'download_url': download_url})
-    except Exception as e:
-        return jsonify({'success': False, 'error': str(e)})
+@app.route('/download/<file_type>')
+def download(file_type):
+    if file_type not in TRAFFIC_LINKS:
+        return "Invalid file type", 400
+    return redirect(TRAFFIC_LINKS[file_type])
 
 if __name__ == '__main__':
     app.run(debug=True, host='0.0.0.0', port=5000)
