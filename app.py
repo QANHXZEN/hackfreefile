@@ -1,9 +1,10 @@
-from flask import Flask, render_template_string, redirect
+from flask import Flask, render_template_string, redirect, request
 
 app = Flask(__name__)
 
 # === LINK VUOTNHANH.COM ===
 VUOTNHANH_LINKS = {
+    # Free Fire - Android
     "esp_vip": "https://vuotnhanh.com/28uK",
     "aimbot": "https://vuotnhanh.com/CRKh",
     "freefire_vip": "https://vuotnhanh.com/MFCO",
@@ -18,7 +19,35 @@ VUOTNHANH_LINKS = {
     "nhe_tam": "https://vuotnhanh.com/sMvv",
     "aim_dau_v2": "https://vuotnhanh.com/0n1q",
     "magic_bullet": "https://vuotnhanh.com/YswI",
-    "ff_global": "https://vuotnhanh.com/mu6L"
+    "ff_global": "https://vuotnhanh.com/mu6L",
+    "ff_max_beta_android": "https://vuotnhanh.com/LKzm",  # FF Max Beta cho Android
+    
+    # Free Fire - PC
+    "ff_max_beta_pc": "https://vuotnhanh.com/LKzm",
+    "block_defend": "https://vuotnhanh.com/tDis",
+    "menu_freefire_pc": "https://vuotnhanh.com/kTrZ",
+    
+    # Roblox - Android
+    "delta_x": "https://vuotnhanh.com/XWxu",
+    "file_login": "https://vuotnhanh.com/hErc",
+    "file_login_vohan": "https://vuotnhanh.com/ngYP",
+    "delta_x_mod": "https://vuotnhanh.com/7LPd",
+    "delta_x_fixlag": "https://vuotnhanh.com/IKqj",
+    "arceus_x": "https://trafficvn.com/links/robloxv6"
+}
+
+# === SCRIPT LUA CHO ROBLOX ===
+SCRIPTS = {
+    "redz_hub": 'loadstring(game:HttpGet("https://raw.githubusercontent.com/huy384/redzHub/refs/heads/main/redzHub.lua"))()',
+    "speedx_hub": 'loadstring(game:HttpGet("https://raw.githubusercontent.com/AhmadV99/Speed-Hub-X/main/Speed%20Hub%20X.lua"))()',
+    "neru_hub": 'loadstring(game:HttpGet("https://raw.githubusercontent.com/NeroHubClub/AutoMythicFruitFinder/refs/heads/main/NeroHubFruitFinder"))()',
+    "teddy_hub": 'loadstring(game:HttpGet("https://raw.githubusercontent.com/Teddyseetink/Haidepzai/refs/heads/main/TeddyHub.lua"))()',
+    "thanhub": 'loadstring(game:HttpGet("https://raw.githubusercontent.com/thantzy/thanhub/refs/heads/main/thanv1"))()',
+    "vxeze_hub": 'loadstring(game:HttpGet("https://raw.githubusercontent.com/Dex-Bear/Vxezehub/refs/heads/main/VxezeHubMain"))()',
+    "banana_hub": 'loadstring(game:HttpGet("https://raw.githubusercontent.com/obiiyeuem/vthangsitink/main/BananaHub.lua"))()',
+    "hoho_hub": 'loadstring(game:HttpGet("https://raw.githubusercontent.com/acsu123/HOHO_H/main/Loading_UI"))()',
+    "bulex_hub": 'loadstring(game:HttpGet("https://raw.githubusercontent.com/Dev-BlueX/BlueX-Hub/refs/heads/main/Main.lua"))()',
+    "datthg_v2": 'loadstring(game:HttpGet("https://raw.githubusercontent.com/LuaCrack/DatThg/refs/heads/main/DatThgV2"))()'
 }
 
 HTML_TEMPLATE = '''
@@ -27,7 +56,7 @@ HTML_TEMPLATE = '''
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-    <title>QANHNO1 - Shop Tool Game</title>
+    <title>QANHMODGAME - SHARE HACK GAME</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <style>
@@ -44,7 +73,6 @@ HTML_TEMPLATE = '''
             min-height: 100vh;
         }
 
-        /* Animated background */
         .bg-animation {
             position: fixed;
             width: 100%;
@@ -63,20 +91,10 @@ HTML_TEMPLATE = '''
         }
 
         @keyframes floatStar {
-            0% {
-                transform: translateY(100vh) scale(0);
-                opacity: 0;
-            }
-            10% {
-                opacity: 1;
-            }
-            90% {
-                opacity: 1;
-            }
-            100% {
-                transform: translateY(-100vh) scale(1);
-                opacity: 0;
-            }
+            0% { transform: translateY(100vh) scale(0); opacity: 0; }
+            10% { opacity: 1; }
+            90% { opacity: 1; }
+            100% { transform: translateY(-100vh) scale(1); opacity: 0; }
         }
 
         .container {
@@ -87,7 +105,6 @@ HTML_TEMPLATE = '''
             padding: 20px;
         }
 
-        /* Header */
         .header {
             text-align: center;
             margin-bottom: 40px;
@@ -114,7 +131,6 @@ HTML_TEMPLATE = '''
             margin-top: 8px;
         }
 
-        /* Stats */
         .stats {
             display: flex;
             justify-content: center;
@@ -154,14 +170,12 @@ HTML_TEMPLATE = '''
             font-size: 0.8rem;
         }
 
-        /* Game Grid */
         .games-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(380px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
             gap: 25px;
         }
 
-        /* Game Card */
         .game-card {
             background: rgba(15, 20, 35, 0.6);
             backdrop-filter: blur(12px);
@@ -227,7 +241,6 @@ HTML_TEMPLATE = '''
             gap: 8px;
         }
 
-        /* Feature Grid */
         .feature-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
@@ -293,7 +306,101 @@ HTML_TEMPLATE = '''
             box-shadow: 0 5px 15px rgba(0,255,136,0.4);
         }
 
-        /* Footer */
+        .script-section {
+            margin-top: 16px;
+            padding: 12px;
+            background: rgba(0,0,0,0.3);
+            border-radius: 16px;
+        }
+
+        .script-title {
+            font-size: 0.9rem;
+            font-weight: 600;
+            margin-bottom: 12px;
+            color: #ffd93d;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .script-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 8px;
+        }
+
+        .script-item {
+            background: rgba(0,0,0,0.4);
+            border-radius: 10px;
+            padding: 8px 12px;
+            font-size: 0.7rem;
+            font-family: monospace;
+            cursor: pointer;
+            transition: 0.3s;
+            border: 1px solid rgba(255,217,61,0.3);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+
+        .script-item:hover {
+            background: rgba(255,217,61,0.2);
+            border-color: #ffd93d;
+        }
+
+        .script-code {
+            flex: 1;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            color: rgba(255,255,255,0.8);
+        }
+
+        .copy-btn {
+            background: rgba(255,217,61,0.3);
+            border: none;
+            border-radius: 6px;
+            padding: 4px 8px;
+            color: #ffd93d;
+            font-size: 0.65rem;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .copy-btn:hover {
+            background: #ffd93d;
+            color: #0a0f1e;
+        }
+
+        .toast-msg {
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #00ff88;
+            color: #0a0f1e;
+            padding: 10px 20px;
+            border-radius: 30px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            z-index: 999;
+            display: none;
+            animation: fadeInUp 0.3s ease;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateX(-50%) translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(-50%) translateY(0);
+            }
+        }
+
         .footer {
             text-align: center;
             padding: 30px;
@@ -310,17 +417,19 @@ HTML_TEMPLATE = '''
             .stat-card { padding: 5px 16px; font-size: 0.8rem; }
             .games-grid { grid-template-columns: 1fr; }
             .feature-grid { grid-template-columns: 1fr; }
+            .script-grid { grid-template-columns: 1fr; }
         }
     </style>
 </head>
 <body>
 
 <div class="bg-animation" id="stars"></div>
+<div class="toast-msg" id="toastMsg"><i class="fas fa-check-circle"></i> Đã sao chép!</div>
 
 <div class="container">
     <div class="header">
-        <div class="logo">⚡ QANHNO1 SHOP ⚡</div>
-        <div class="slogan"><i class="fas fa-gem"></i> Tool Game - Mod Skin - Hỗ trợ 24/7 <i class="fas fa-gem"></i></div>
+        <div class="logo">⚡ QANHMODGAME ⚡</div>
+        <div class="slogan"><i class="fas fa-gem"></i> Hack Game - Mod Skin - Script Hub - Hỗ trợ 24/7 <i class="fas fa-gem"></i></div>
     </div>
 
     <div class="stats">
@@ -337,9 +446,15 @@ HTML_TEMPLATE = '''
             <div class="game-header ff">
                 <h2><i class="fas fa-gamepad"></i> FREE FIRE <i class="fas fa-skull"></i></h2>
             </div>
+            
+            <!-- Android -->
             <div class="platform-section">
                 <div class="platform-title"><i class="fab fa-android"></i> ANDROID</div>
                 <div class="feature-grid">
+                    <div class="feature-item" onclick="location.href='/download/ff_max_beta_android'">
+                        <div class="feature-name"><i class="fas fa-fire"></i> FF Max Beta</div>
+                        <button class="btn-down"><i class="fas fa-download"></i> TẢI NGAY</button>
+                    </div>
                     <div class="feature-item" onclick="location.href='/download/esp_vip'">
                         <div class="feature-name"><i class="fas fa-eye"></i> Esp Vip</div>
                         <div class="feature-acc"><i class="fas fa-user"></i> LIMON-GAMING-OFC <br> <i class="fas fa-lock"></i> 248194848323</div>
@@ -403,6 +518,29 @@ HTML_TEMPLATE = '''
                     </div>
                 </div>
             </div>
+            
+            <!-- PC -->
+            <div class="platform-section">
+                <div class="platform-title"><i class="fas fa-desktop"></i> PC (Bluestacks)</div>
+                <div class="feature-grid">
+                    <div class="feature-item" onclick="location.href='/download/ff_max_beta_pc'">
+                        <div class="feature-name"><i class="fas fa-fire"></i> FF Max Beta</div>
+                        <button class="btn-down"><i class="fas fa-download"></i> TẢI NGAY</button>
+                    </div>
+                    <div class="feature-item" onclick="location.href='/download/block_defend'">
+                        <div class="feature-name"><i class="fas fa-shield-alt"></i> Block Defend</div>
+                        <div class="feature-acc"><i class="fas fa-key"></i> Pass rar: Z4</div>
+                        <button class="btn-down"><i class="fas fa-download"></i> TẢI NGAY</button>
+                    </div>
+                    <div class="feature-item" onclick="location.href='/download/menu_freefire_pc'">
+                        <div class="feature-name"><i class="fas fa-crown"></i> Menu Free Fire PC</div>
+                        <div class="feature-acc"><i class="fas fa-user"></i> User: Old &nbsp;|&nbsp; <i class="fas fa-lock"></i> Pas: 1<br><i class="fas fa-key"></i> Pass rar: 1</div>
+                        <button class="btn-down"><i class="fas fa-download"></i> TẢI NGAY</button>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- iOS -->
             <div class="platform-section">
                 <div class="platform-title"><i class="fab fa-apple"></i> iOS</div>
                 <div style="text-align:center; padding:20px; color:#666;"><i class="fas fa-clock"></i> Đang cập nhật...</div>
@@ -414,10 +552,94 @@ HTML_TEMPLATE = '''
             <div class="game-header rbx">
                 <h2><i class="fab fa-fort-awesome"></i> ROBLOX</h2>
             </div>
+            
+            <!-- Android -->
             <div class="platform-section">
                 <div class="platform-title"><i class="fab fa-android"></i> ANDROID</div>
+                <div class="feature-grid">
+                    <div class="feature-item" onclick="location.href='/download/delta_x'">
+                        <div class="feature-name"><i class="fas fa-dragon"></i> Delta X Quốc Tế</div>
+                        <button class="btn-down"><i class="fas fa-download"></i> TẢI NGAY</button>
+                    </div>
+                    <div class="feature-item" onclick="location.href='/download/file_login'">
+                        <div class="feature-name"><i class="fas fa-sign-in-alt"></i> File Login</div>
+                        <button class="btn-down"><i class="fas fa-download"></i> TẢI NGAY</button>
+                    </div>
+                    <div class="feature-item" onclick="location.href='/download/file_login_vohan'">
+                        <div class="feature-name"><i class="fas fa-infinity"></i> File Login Vô Hạn</div>
+                        <button class="btn-down"><i class="fas fa-download"></i> TẢI NGAY</button>
+                    </div>
+                    <div class="feature-item" onclick="location.href='/download/delta_x_mod'">
+                        <div class="feature-name"><i class="fas fa-cogs"></i> Delta X Mod (không cài đè)</div>
+                        <button class="btn-down"><i class="fas fa-download"></i> TẢI NGAY</button>
+                    </div>
+                    <div class="feature-item" onclick="location.href='/download/delta_x_fixlag'">
+                        <div class="feature-name"><i class="fas fa-tachometer-alt"></i> Delta X Fix Lag</div>
+                        <button class="btn-down"><i class="fas fa-download"></i> TẢI NGAY</button>
+                    </div>
+                    <div class="feature-item" onclick="location.href='/download/arceus_x'">
+                        <div class="feature-name"><i class="fas fa-dove"></i> Arceus X Quốc Tế</div>
+                        <button class="btn-down"><i class="fas fa-download"></i> TẢI NGAY</button>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Script Hub -->
+            <div class="platform-section">
+                <div class="platform-title"><i class="fas fa-code"></i> SCRIPT HUB</div>
+                <div class="script-section">
+                    <div class="script-grid">
+                        <div class="script-item" onclick="copyScript('redz_hub')">
+                            <span class="script-code">🔴 RedZ Hub No Key</span>
+                            <button class="copy-btn"><i class="fas fa-copy"></i> Sao chép</button>
+                        </div>
+                        <div class="script-item" onclick="copyScript('speedx_hub')">
+                            <span class="script-code">⚡ SpeedX Hub</span>
+                            <button class="copy-btn"><i class="fas fa-copy"></i> Sao chép</button>
+                        </div>
+                        <div class="script-item" onclick="copyScript('neru_hub')">
+                            <span class="script-code">🌀 Neru Hub</span>
+                            <button class="copy-btn"><i class="fas fa-copy"></i> Sao chép</button>
+                        </div>
+                        <div class="script-item" onclick="copyScript('teddy_hub')">
+                            <span class="script-code">🧸 Teddy Hub [Beta]</span>
+                            <button class="copy-btn"><i class="fas fa-copy"></i> Sao chép</button>
+                        </div>
+                        <div class="script-item" onclick="copyScript('thanhub')">
+                            <span class="script-code">💎 Thanhub Freemium</span>
+                            <button class="copy-btn"><i class="fas fa-copy"></i> Sao chép</button>
+                        </div>
+                        <div class="script-item" onclick="copyScript('vxeze_hub')">
+                            <span class="script-code">🐉 Vxeze Hub</span>
+                            <button class="copy-btn"><i class="fas fa-copy"></i> Sao chép</button>
+                        </div>
+                        <div class="script-item" onclick="copyScript('banana_hub')">
+                            <span class="script-code">🍌 Banana Hub</span>
+                            <button class="copy-btn"><i class="fas fa-copy"></i> Sao chép</button>
+                        </div>
+                        <div class="script-item" onclick="copyScript('hoho_hub')">
+                            <span class="script-code">🎭 Hoho Hub</span>
+                            <button class="copy-btn"><i class="fas fa-copy"></i> Sao chép</button>
+                        </div>
+                        <div class="script-item" onclick="copyScript('bulex_hub')">
+                            <span class="script-code">🔵 BuleX Hub</span>
+                            <button class="copy-btn"><i class="fas fa-copy"></i> Sao chép</button>
+                        </div>
+                        <div class="script-item" onclick="copyScript('datthg_v2')">
+                            <span class="script-code">📀 DatThg V2</span>
+                            <button class="copy-btn"><i class="fas fa-copy"></i> Sao chép</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- PC -->
+            <div class="platform-section">
+                <div class="platform-title"><i class="fas fa-desktop"></i> PC</div>
                 <div style="text-align:center; padding:20px; color:#666;"><i class="fas fa-clock"></i> Đang cập nhật...</div>
             </div>
+            
+            <!-- iOS -->
             <div class="platform-section">
                 <div class="platform-title"><i class="fab fa-apple"></i> iOS</div>
                 <div style="text-align:center; padding:20px; color:#666;"><i class="fas fa-clock"></i> Đang cập nhật...</div>
@@ -429,10 +651,20 @@ HTML_TEMPLATE = '''
             <div class="game-header pubg">
                 <h2><i class="fas fa-gun"></i> PUBG</h2>
             </div>
+            
+            <!-- Android -->
             <div class="platform-section">
                 <div class="platform-title"><i class="fab fa-android"></i> ANDROID</div>
                 <div style="text-align:center; padding:20px; color:#666;"><i class="fas fa-clock"></i> Đang cập nhật...</div>
             </div>
+            
+            <!-- PC -->
+            <div class="platform-section">
+                <div class="platform-title"><i class="fas fa-desktop"></i> PC</div>
+                <div style="text-align:center; padding:20px; color:#666;"><i class="fas fa-clock"></i> Đang cập nhật...</div>
+            </div>
+            
+            <!-- iOS -->
             <div class="platform-section">
                 <div class="platform-title"><i class="fab fa-apple"></i> iOS</div>
                 <div style="text-align:center; padding:20px; color:#666;"><i class="fas fa-clock"></i> Đang cập nhật...</div>
@@ -441,7 +673,7 @@ HTML_TEMPLATE = '''
     </div>
 
     <div class="footer">
-        <i class="fas fa-shield-alt"></i> QANHNO1 SHOP - Uy tín hàng đầu Việt Nam<br>
+        <i class="fas fa-shield-alt"></i> QANHMODGAME - HACK AN TOÀN VÀ CHẤT LƯỢNG<br>
         © 2026 - All rights reserved
     </div>
 </div>
@@ -458,6 +690,22 @@ HTML_TEMPLATE = '''
         star.style.background = `rgba(0, 255, ${100 + Math.random() * 155}, ${0.3 + Math.random() * 0.5})`;
         starsContainer.appendChild(star);
     }
+
+    // Script data từ backend
+    const scripts = {{ scripts|tojson }};
+
+    function copyScript(scriptKey) {
+        const scriptCode = scripts[scriptKey];
+        if (!scriptCode) return;
+        
+        navigator.clipboard.writeText(scriptCode).then(() => {
+            const toast = document.getElementById('toastMsg');
+            toast.style.display = 'block';
+            setTimeout(() => {
+                toast.style.display = 'none';
+            }, 2000);
+        });
+    }
 </script>
 
 </body>
@@ -466,7 +714,7 @@ HTML_TEMPLATE = '''
 
 @app.route('/')
 def index():
-    return render_template_string(HTML_TEMPLATE)
+    return render_template_string(HTML_TEMPLATE, scripts=SCRIPTS)
 
 @app.route('/download/<file_type>')
 def download(file_type):
