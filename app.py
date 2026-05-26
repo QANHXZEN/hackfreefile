@@ -8,7 +8,17 @@ TRAFFIC_LINKS = {
     "aimbot": "https://trafficvn.com/links/qanhaimbot",
     "freefire_vip": "https://trafficvn.com/links/qanh",
     "naruto_ping": "https://trafficvn.com/links/qanhv1",
-    "henry_ping": "https://trafficvn.com/links/qanhv2"
+    "henry_ping": "https://trafficvn.com/links/qanhv2",
+    "tangnhay_v1": "https://trafficvn.com/links/tangnhayv1",
+    "script_doraemon": "https://trafficvn.com/links/scriptv1",
+    "xuyen_keo": "https://trafficvn.com/links/metadatav2",
+    "dam_ra_van_go": "https://trafficvn.com/links/metadatav3",
+    "xuyen_all_map": "https://trafficvn.com/links/metadatav4",
+    "fix_lag": "https://trafficvn.com/links/tangnhayv2",
+    "nhe_tam_v1": "https://trafficvn.com/links/4d15a5",
+    "aim_dau_v2": "https://trafficvn.com/links/qanhaimbotv2",
+    "magic_bullet": "https://trafficvn.com/links/magicv1",
+    "ff_global": "https://www.mediafire.com/file/ljyp68a70m37m3t/Free+Fire_1.123.1.apk/file"
 }
 
 # === HTML ===
@@ -40,7 +50,7 @@ HTML_TEMPLATE = '''
         .sub { text-align: center; color: #888; margin-bottom: 40px; }
         .games-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(380px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
             gap: 25px;
             margin-bottom: 40px;
         }
@@ -79,64 +89,55 @@ HTML_TEMPLATE = '''
             padding-left: 10px;
             border-left: 4px solid #00ff88;
         }
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 10px;
+        }
         .feature-box {
             background: rgba(0, 0, 0, 0.5);
             border-radius: 12px;
-            padding: 15px;
-            margin-bottom: 15px;
+            padding: 12px;
             transition: all 0.3s;
-        }
-        .feature-box.esp {
-            border: 1px solid #ff6b6b;
-            background: linear-gradient(135deg, rgba(255,107,107,0.1), rgba(0,0,0,0.3));
-        }
-        .feature-box.aim {
-            border: 1px solid #ffd93d;
-            background: linear-gradient(135deg, rgba(255,217,61,0.1), rgba(0,0,0,0.3));
-        }
-        .feature-box.vip {
-            border: 1px solid #ff00ff;
-            background: linear-gradient(135deg, rgba(255,0,255,0.1), rgba(0,0,0,0.3));
-        }
-        .feature-box.naruto {
-            border: 1px solid #ff9900;
-            background: linear-gradient(135deg, rgba(255,153,0,0.1), rgba(0,0,0,0.3));
-        }
-        .feature-box.henry {
-            border: 1px solid #00ccff;
-            background: linear-gradient(135deg, rgba(0,204,255,0.1), rgba(0,0,0,0.3));
-        }
-        .feature-name {
-            font-size: 1.2rem;
-            font-weight: bold;
-            margin-bottom: 10px;
             text-align: center;
+        }
+        .feature-box.esp { border: 1px solid #ff6b6b; background: linear-gradient(135deg, rgba(255,107,107,0.1), rgba(0,0,0,0.3)); }
+        .feature-box.aim { border: 1px solid #ffd93d; background: linear-gradient(135deg, rgba(255,217,61,0.1), rgba(0,0,0,0.3)); }
+        .feature-box.vip { border: 1px solid #ff00ff; background: linear-gradient(135deg, rgba(255,0,255,0.1), rgba(0,0,0,0.3)); }
+        .feature-box.naruto { border: 1px solid #ff9900; background: linear-gradient(135deg, rgba(255,153,0,0.1), rgba(0,0,0,0.3)); }
+        .feature-box.henry { border: 1px solid #00ccff; background: linear-gradient(135deg, rgba(0,204,255,0.1), rgba(0,0,0,0.3)); }
+        .feature-box.default { border: 1px solid #00ff88; background: linear-gradient(135deg, rgba(0,255,136,0.1), rgba(0,0,0,0.3)); }
+        .feature-name {
+            font-size: 0.95rem;
+            font-weight: bold;
+            margin-bottom: 8px;
         }
         .feature-name.esp { color: #ff6b6b; }
         .feature-name.aim { color: #ffd93d; }
         .feature-name.vip { color: #ff00ff; }
         .feature-name.naruto { color: #ff9900; }
         .feature-name.henry { color: #00ccff; }
+        .feature-name.default { color: #00ff88; }
         .account-info {
             background: rgba(0,0,0,0.6);
             border-radius: 8px;
-            padding: 10px;
-            margin: 10px 0;
-            font-size: 0.85rem;
+            padding: 8px;
+            margin: 8px 0;
+            font-size: 0.7rem;
             text-align: center;
             font-family: monospace;
         }
         .btn-download {
             display: block;
             width: 100%;
-            padding: 12px;
-            margin-top: 10px;
+            padding: 8px;
+            margin-top: 8px;
             background: linear-gradient(135deg, #00ff88, #00b8ff);
             border: none;
-            border-radius: 25px;
+            border-radius: 20px;
             color: #0a0f1e;
             font-weight: bold;
-            font-size: 1rem;
+            font-size: 0.85rem;
             cursor: pointer;
             transition: transform 0.2s, box-shadow 0.2s;
         }
@@ -147,6 +148,7 @@ HTML_TEMPLATE = '''
         @media (max-width: 768px) {
             .games-grid { grid-template-columns: 1fr; }
             h1 { font-size: 1.8rem; }
+            .feature-grid { grid-template-columns: 1fr; }
         }
     </style>
 </head>
@@ -160,43 +162,85 @@ HTML_TEMPLATE = '''
                 <div class="game-title ff">🔥 FREE FIRE</div>
                 <div class="platform-section">
                     <div class="platform-title">📱 ANDROID</div>
-                    
-                    <!-- Esp Vip -->
-                    <div class="feature-box esp">
-                        <div class="feature-name esp">🎯 Esp Vip</div>
-                        <div class="account-info">
-                            📌 Tài khoản: LIMON-GAMING-OFC<br>
-                            🔑 Mật khẩu: 248194848323
+                    <div class="feature-grid">
+                        <!-- Esp Vip -->
+                        <div class="feature-box esp">
+                            <div class="feature-name esp">🎯 Esp Vip</div>
+                            <div class="account-info">📌 LIMON-GAMING-OFC<br>🔑 248194848323</div>
+                            <button class="btn-download" onclick="window.location.href='/download/esp_vip'">⬇️ Tải</button>
                         </div>
-                        <button class="btn-download" onclick="window.location.href='/download/esp_vip'">⬇️ Tải xuống</button>
-                    </div>
-
-                    <!-- AimBot 90% -->
-                    <div class="feature-box aim">
-                        <div class="feature-name aim">🎯 AimBot 90%</div>
-                        <button class="btn-download" onclick="window.location.href='/download/aimbot'">⬇️ Tải xuống</button>
-                    </div>
-
-                    <!-- Menu Free Fire VIP (đã đổi tên) -->
-                    <div class="feature-box vip">
-                        <div class="feature-name vip">📁 Menu Free Fire VIP</div>
-                        <button class="btn-download" onclick="window.location.href='/download/freefire_vip'">⬇️ Tải xuống</button>
-                    </div>
-
-                    <!-- Naruto Ping Crack -->
-                    <div class="feature-box naruto">
-                        <div class="feature-name naruto">🍥 Naruto Ping Crack</div>
-                        <button class="btn-download" onclick="window.location.href='/download/naruto_ping'">⬇️ Tải xuống</button>
-                    </div>
-
-                    <!-- Henry Ping Crack -->
-                    <div class="feature-box henry">
-                        <div class="feature-name henry">⚡ Henry Ping Crack</div>
-                        <button class="btn-download" onclick="window.location.href='/download/henry_ping'">⬇️ Tải xuống</button>
+                        <!-- AimBot 90% -->
+                        <div class="feature-box aim">
+                            <div class="feature-name aim">🎯 AimBot 90%</div>
+                            <button class="btn-download" onclick="window.location.href='/download/aimbot'">⬇️ Tải</button>
+                        </div>
+                        <!-- Menu Free Fire VIP -->
+                        <div class="feature-box vip">
+                            <div class="feature-name vip">📁 Menu Free Fire VIP</div>
+                            <button class="btn-download" onclick="window.location.href='/download/freefire_vip'">⬇️ Tải</button>
+                        </div>
+                        <!-- Naruto Ping Crack -->
+                        <div class="feature-box naruto">
+                            <div class="feature-name naruto">🍥 Naruto Ping Crack</div>
+                            <button class="btn-download" onclick="window.location.href='/download/naruto_ping'">⬇️ Tải</button>
+                        </div>
+                        <!-- Henry Ping Crack -->
+                        <div class="feature-box henry">
+                            <div class="feature-name henry">⚡ Henry Ping Crack</div>
+                            <button class="btn-download" onclick="window.location.href='/download/henry_ping'">⬇️ Tải</button>
+                        </div>
+                        <!-- Tăng Nhạy V1 -->
+                        <div class="feature-box default">
+                            <div class="feature-name default">⚡ Tăng Nhạy V1</div>
+                            <button class="btn-download" onclick="window.location.href='/download/tangnhay_v1'">⬇️ Tải</button>
+                        </div>
+                        <!-- Script Doraemon V3 -->
+                        <div class="feature-box default">
+                            <div class="feature-name default">🔵 Script Doraemon V3</div>
+                            <button class="btn-download" onclick="window.location.href='/download/script_doraemon'">⬇️ Tải</button>
+                        </div>
+                        <!-- Đi xuyên keo -->
+                        <div class="feature-box default">
+                            <div class="feature-name default">🪄 Đi xuyên keo</div>
+                            <button class="btn-download" onclick="window.location.href='/download/xuyen_keo'">⬇️ Tải</button>
+                        </div>
+                        <!-- Đấm ra ván gỗ -->
+                        <div class="feature-box default">
+                            <div class="feature-name default">👊 Đấm ra ván gỗ</div>
+                            <button class="btn-download" onclick="window.location.href='/download/dam_ra_van_go'">⬇️ Tải</button>
+                        </div>
+                        <!-- Đi xuyên all map, đán ra sàn kính -->
+                        <div class="feature-box default">
+                            <div class="feature-name default">🗺️ Đi xuyên all map, đán ra sàn kính</div>
+                            <button class="btn-download" onclick="window.location.href='/download/xuyen_all_map'">⬇️ Tải</button>
+                        </div>
+                        <!-- Fix lag -->
+                        <div class="feature-box default">
+                            <div class="feature-name default">🔧 Fix lag</div>
+                            <button class="btn-download" onclick="window.location.href='/download/fix_lag'">⬇️ Tải</button>
+                        </div>
+                        <!-- Nhẹ tâm v1 -->
+                        <div class="feature-box default">
+                            <div class="feature-name default">🍃 Nhẹ tâm v1</div>
+                            <button class="btn-download" onclick="window.location.href='/download/nhe_tam_v1'">⬇️ Tải</button>
+                        </div>
+                        <!-- Aim đầu v2 -->
+                        <div class="feature-box default">
+                            <div class="feature-name default">🎯 Aim đầu v2</div>
+                            <button class="btn-download" onclick="window.location.href='/download/aim_dau_v2'">⬇️ Tải</button>
+                        </div>
+                        <!-- Magic Bullet, xuyên keo -->
+                        <div class="feature-box default">
+                            <div class="feature-name default">✨ Magic Bullet, xuyên keo</div>
+                            <button class="btn-download" onclick="window.location.href='/download/magic_bullet'">⬇️ Tải</button>
+                        </div>
+                        <!-- Free Fire Global -->
+                        <div class="feature-box default">
+                            <div class="feature-name default">🌍 Free Fire Global</div>
+                            <button class="btn-download" onclick="window.location.href='/download/ff_global'">⬇️ Tải</button>
+                        </div>
                     </div>
                 </div>
-
-                <!-- iOS -->
                 <div class="platform-section">
                     <div class="platform-title">🍎 iOS</div>
                     <div style="text-align: center; padding: 20px; color: #888;">⏳ Đang cập nhật...</div>
