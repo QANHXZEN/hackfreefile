@@ -1,53 +1,15 @@
 from flask import Flask, render_template_string, redirect
-import requests
 
 app = Flask(__name__)
 
-# === TOKEN CỦA BẠN ===
-LINK4M_TOKEN = "65c47d157fbdff4d79625e57"
-TRAFFIC_TOKEN = "ee4f080ff90f6180b109ecc4"
-
-# Link MediaFire gốc
-MEDIAFIRE_LINKS = {
-    "esp_vip": "https://www.mediafire.com/file/hbrs6rr26flgz7z/FF+MAX+INJECTOR+MAIN+ID+SAFE+(1).zip/file",
-    "aimbot": "https://www.mediafire.com/file/oged4p8u6blci0k/LEHER+HS+METADATA.7z/file"
+# === LINK CỦA BẠN ===
+TRAFFIC_LINKS = {
+    "esp_vip": "https://trafficvn.com/links/qanhesp",
+    "aimbot": "https://trafficvn.com/links/qanhaimbot",
+    "freefire_vip": "https://trafficvn.com/links/qanh",
+    "naruto_ping": "https://trafficvn.com/links/qanhv1",
+    "henry_ping": "https://trafficvn.com/links/qanhv2"
 }
-
-# === HÀM TẠO LINK ===
-def create_link4m_url(mediafire_url):
-    """Tạo link Link4m từ MediaFire"""
-    try:
-        api_url = f"https://link4m.com/api?api={LINK4M_TOKEN}&url={mediafire_url}"
-        r = requests.get(api_url, timeout=10)
-        if r.status_code == 200:
-            data = r.json()
-            return data.get("shorturl") or data.get("shortened_url") or data.get("url")
-        return mediafire_url
-    except:
-        return mediafire_url
-
-def create_trafficvn_url(link4m_url):
-    """Tạo link TrafficVN từ Link4m"""
-    try:
-        api_url = "https://trafficvn.com/api/v1/shorten"
-        payload = {"token": TRAFFIC_TOKEN, "url": link4m_url}
-        r = requests.post(api_url, json=payload, timeout=10)
-        if r.status_code == 200:
-            data = r.json()
-            return data.get("shortened_url") or data.get("shorturl")
-        return link4m_url
-    except:
-        return link4m_url
-
-# === TỰ ĐỘNG TẠO LINK KHI KHỞI ĐỘNG ===
-print("🔄 Đang tạo link TrafficVN + Link4m...")
-TRAFFIC_LINKS = {}
-for key, media_url in MEDIAFIRE_LINKS.items():
-    link4m = create_link4m_url(media_url)
-    traffic = create_trafficvn_url(link4m)
-    TRAFFIC_LINKS[key] = traffic
-    print(f"✅ {key}: {traffic}")
-print("🎉 Khởi động web...\n")
 
 # === HTML ===
 HTML_TEMPLATE = '''
@@ -132,6 +94,18 @@ HTML_TEMPLATE = '''
             border: 1px solid #ffd93d;
             background: linear-gradient(135deg, rgba(255,217,61,0.1), rgba(0,0,0,0.3));
         }
+        .feature-box.vip {
+            border: 1px solid #ff00ff;
+            background: linear-gradient(135deg, rgba(255,0,255,0.1), rgba(0,0,0,0.3));
+        }
+        .feature-box.naruto {
+            border: 1px solid #ff9900;
+            background: linear-gradient(135deg, rgba(255,153,0,0.1), rgba(0,0,0,0.3));
+        }
+        .feature-box.henry {
+            border: 1px solid #00ccff;
+            background: linear-gradient(135deg, rgba(0,204,255,0.1), rgba(0,0,0,0.3));
+        }
         .feature-name {
             font-size: 1.2rem;
             font-weight: bold;
@@ -140,6 +114,9 @@ HTML_TEMPLATE = '''
         }
         .feature-name.esp { color: #ff6b6b; }
         .feature-name.aim { color: #ffd93d; }
+        .feature-name.vip { color: #ff00ff; }
+        .feature-name.naruto { color: #ff9900; }
+        .feature-name.henry { color: #00ccff; }
         .account-info {
             background: rgba(0,0,0,0.6);
             border-radius: 8px;
@@ -183,6 +160,8 @@ HTML_TEMPLATE = '''
                 <div class="game-title ff">🔥 FREE FIRE</div>
                 <div class="platform-section">
                     <div class="platform-title">📱 ANDROID</div>
+                    
+                    <!-- Esp Vip -->
                     <div class="feature-box esp">
                         <div class="feature-name esp">🎯 Esp Vip</div>
                         <div class="account-info">
@@ -191,22 +170,46 @@ HTML_TEMPLATE = '''
                         </div>
                         <button class="btn-download" onclick="window.location.href='/download/esp_vip'">⬇️ Tải xuống</button>
                     </div>
+
+                    <!-- AimBot 90% -->
                     <div class="feature-box aim">
                         <div class="feature-name aim">🎯 AimBot 90%</div>
                         <button class="btn-download" onclick="window.location.href='/download/aimbot'">⬇️ Tải xuống</button>
                     </div>
+
+                    <!-- Menu Free Fire VIP (đã đổi tên) -->
+                    <div class="feature-box vip">
+                        <div class="feature-name vip">📁 Menu Free Fire VIP</div>
+                        <button class="btn-download" onclick="window.location.href='/download/freefire_vip'">⬇️ Tải xuống</button>
+                    </div>
+
+                    <!-- Naruto Ping Crack -->
+                    <div class="feature-box naruto">
+                        <div class="feature-name naruto">🍥 Naruto Ping Crack</div>
+                        <button class="btn-download" onclick="window.location.href='/download/naruto_ping'">⬇️ Tải xuống</button>
+                    </div>
+
+                    <!-- Henry Ping Crack -->
+                    <div class="feature-box henry">
+                        <div class="feature-name henry">⚡ Henry Ping Crack</div>
+                        <button class="btn-download" onclick="window.location.href='/download/henry_ping'">⬇️ Tải xuống</button>
+                    </div>
                 </div>
+
+                <!-- iOS -->
                 <div class="platform-section">
                     <div class="platform-title">🍎 iOS</div>
                     <div style="text-align: center; padding: 20px; color: #888;">⏳ Đang cập nhật...</div>
                 </div>
             </div>
+
             <!-- ROBLOX -->
             <div class="game-card">
                 <div class="game-title rbx">🎮 ROBLOX</div>
                 <div class="platform-section"><div class="platform-title">📱 ANDROID</div><div style="text-align: center; padding: 20px; color: #888;">⏳ Đang cập nhật...</div></div>
                 <div class="platform-section"><div class="platform-title">🍎 iOS</div><div style="text-align: center; padding: 20px; color: #888;">⏳ Đang cập nhật...</div></div>
             </div>
+
             <!-- PUBG -->
             <div class="game-card">
                 <div class="game-title pubg">🎯 PUBG</div>
