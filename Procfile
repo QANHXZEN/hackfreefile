@@ -1,0 +1,1 @@
+web: gunicorn websharefile:app
