@@ -20,7 +20,7 @@ VUOTNHANH_LINKS = {
     "aim_dau_v2": "https://vuotnhanh.com/0n1q",
     "magic_bullet": "https://vuotnhanh.com/YswI",
     "ff_global": "https://vuotnhanh.com/mu6L",
-    "ff_max_beta_android": "https://vuotnhanh.com/LKzm",  # FF Max Beta cho Android
+    "ff_max_beta_android": "https://vuotnhanh.com/LKzm",
     
     # Free Fire - PC
     "ff_max_beta_pc": "https://vuotnhanh.com/LKzm",
@@ -33,7 +33,20 @@ VUOTNHANH_LINKS = {
     "file_login_vohan": "https://vuotnhanh.com/ngYP",
     "delta_x_mod": "https://vuotnhanh.com/7LPd",
     "delta_x_fixlag": "https://vuotnhanh.com/IKqj",
-    "arceus_x": "https://trafficvn.com/links/robloxv6"
+    "arceus_x": "https://trafficvn.com/links/robloxv6",
+    
+    # PUBG - Android
+    "falcon_x": "https://vuotnhanh.com/sUac",
+    "spider_cheat": "https://vuotnhanh.com/gwKh",
+    "panda_crack": "https://vuotnhanh.com/2ZJH",
+    "ali_dev": "https://vuotnhanh.com/6YoS",
+    "max_loader": "https://vuotnhanh.com/tVpa",
+    "fast_loader": "https://vuotnhanh.com/m0eq",
+    "speedy_loader": "https://vuotnhanh.com/iqdT",
+    "naruto_engine_global": "https://vuotnhanh.com/0q2m",
+    "naruto_engine_korea": "https://vuotnhanh.com/q62r",
+    "naruto_engine_taiwan": "https://vuotnhanh.com/Ni3g",
+    "getkey_loaders": "https://vuotnhanh.com/CWzp"
 }
 
 # === SCRIPT LUA CHO ROBLOX ===
@@ -56,7 +69,7 @@ HTML_TEMPLATE = '''
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-    <title>QANHMODGAME - SHARE HACK GAME</title>
+    <title>QANH MOD GAME - Hack Game</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <style>
@@ -277,6 +290,12 @@ HTML_TEMPLATE = '''
             font-size: 1rem;
         }
 
+        .feature-note {
+            font-size: 0.6rem;
+            color: rgba(255,255,255,0.5);
+            margin-top: 4px;
+        }
+
         .feature-acc {
             font-size: 0.6rem;
             font-family: monospace;
@@ -428,7 +447,7 @@ HTML_TEMPLATE = '''
 
 <div class="container">
     <div class="header">
-        <div class="logo">⚡ QANHMODGAME ⚡</div>
+        <div class="logo">⚡ QANH MOD GAME ⚡</div>
         <div class="slogan"><i class="fas fa-gem"></i> Hack Game - Mod Skin - Script Hub - Hỗ trợ 24/7 <i class="fas fa-gem"></i></div>
     </div>
 
@@ -655,7 +674,62 @@ HTML_TEMPLATE = '''
             <!-- Android -->
             <div class="platform-section">
                 <div class="platform-title"><i class="fab fa-android"></i> ANDROID</div>
-                <div style="text-align:center; padding:20px; color:#666;"><i class="fas fa-clock"></i> Đang cập nhật...</div>
+                <div class="feature-grid">
+                    <div class="feature-item" onclick="location.href='/download/falcon_x'">
+                        <div class="feature-name"><i class="fas fa-falcon"></i> Falcon X Loader</div>
+                        <div class="feature-note"><i class="fas fa-skull-crossbones"></i> (cần root)</div>
+                        <button class="btn-down"><i class="fas fa-download"></i> TẢI NGAY</button>
+                    </div>
+                    <div class="feature-item" onclick="location.href='/download/spider_cheat'">
+                        <div class="feature-name"><i class="fas fa-spider"></i> Spider Cheat v2</div>
+                        <div class="feature-note"><i class="fas fa-skull-crossbones"></i> (cần root)</div>
+                        <button class="btn-down"><i class="fas fa-download"></i> TẢI NGAY</button>
+                    </div>
+                    <div class="feature-item" onclick="location.href='/download/panda_crack'">
+                        <div class="feature-name"><i class="fas fa-panda"></i> Panda Crack</div>
+                        <div class="feature-note"><i class="fas fa-skull-crossbones"></i> (cần root)</div>
+                        <button class="btn-down"><i class="fas fa-download"></i> TẢI NGAY</button>
+                    </div>
+                    <div class="feature-item" onclick="location.href='/download/ali_dev'">
+                        <div class="feature-name"><i class="fas fa-code"></i> Ali Dev Loader</div>
+                        <div class="feature-note"><i class="fas fa-skull-crossbones"></i> (cần root)</div>
+                        <button class="btn-down"><i class="fas fa-download"></i> TẢI NGAY</button>
+                    </div>
+                    <div class="feature-item" onclick="location.href='/download/max_loader'">
+                        <div class="feature-name"><i class="fas fa-chart-line"></i> Max Loader Crack</div>
+                        <div class="feature-note"><i class="fas fa-skull-crossbones"></i> (cần root)</div>
+                        <button class="btn-down"><i class="fas fa-download"></i> TẢI NGAY</button>
+                    </div>
+                    <div class="feature-item" onclick="location.href='/download/fast_loader'">
+                        <div class="feature-name"><i class="fas fa-rocket"></i> Fast Loader Crack</div>
+                        <div class="feature-note"><i class="fas fa-skull-crossbones"></i> (cần root)</div>
+                        <button class="btn-down"><i class="fas fa-download"></i> TẢI NGAY</button>
+                    </div>
+                    <div class="feature-item" onclick="location.href='/download/speedy_loader'">
+                        <div class="feature-name"><i class="fas fa-tachometer-alt"></i> Speedy Loader Crack</div>
+                        <div class="feature-note"><i class="fas fa-skull-crossbones"></i> (cần root)</div>
+                        <button class="btn-down"><i class="fas fa-download"></i> TẢI NGAY</button>
+                    </div>
+                    <div class="feature-item" onclick="location.href='/download/naruto_engine_global'">
+                        <div class="feature-name"><i class="fas fa-globe-asia"></i> Naruto Engine Global</div>
+                        <div class="feature-note"><i class="fas fa-file"></i> APK</div>
+                        <button class="btn-down"><i class="fas fa-download"></i> TẢI NGAY</button>
+                    </div>
+                    <div class="feature-item" onclick="location.href='/download/naruto_engine_korea'">
+                        <div class="feature-name"><i class="fas fa-flag-checkered"></i> Naruto Engine Korea</div>
+                        <div class="feature-note"><i class="fas fa-file"></i> APK</div>
+                        <button class="btn-down"><i class="fas fa-download"></i> TẢI NGAY</button>
+                    </div>
+                    <div class="feature-item" onclick="location.href='/download/naruto_engine_taiwan'">
+                        <div class="feature-name"><i class="fas fa-flag"></i> Naruto Engine Taiwan</div>
+                        <div class="feature-note"><i class="fas fa-file"></i> APK</div>
+                        <button class="btn-down"><i class="fas fa-download"></i> TẢI NGAY</button>
+                    </div>
+                    <div class="feature-item" onclick="location.href='/download/getkey_loaders'">
+                        <div class="feature-name"><i class="fas fa-key"></i> Getkey các Loader</div>
+                        <button class="btn-down"><i class="fas fa-download"></i> TẢI NGAY</button>
+                    </div>
+                </div>
             </div>
             
             <!-- PC -->
@@ -673,7 +747,7 @@ HTML_TEMPLATE = '''
     </div>
 
     <div class="footer">
-        <i class="fas fa-shield-alt"></i> QANHMODGAME - HACK AN TOÀN VÀ CHẤT LƯỢNG<br>
+        <i class="fas fa-shield-alt"></i> QANH MOD GAME - Uy tín hàng đầu Việt Nam<br>
         © 2026 - All rights reserved
     </div>
 </div>
